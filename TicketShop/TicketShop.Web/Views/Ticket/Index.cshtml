@@ -1,0 +1,70 @@
+﻿@model List<TicketShop.Domain.DomainModels.Ticket>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+
+<div class="container">
+
+    <div class="row">
+        <div class="col">
+        <form asp-action="Index">
+        <h6>Filter by date:</h6>
+        
+        <div class="form-group">
+                <label for="date" class="control-label"></label>
+                <input type="datetime-local" name="date" id="date" class="form-control" />
+                <span id="date" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Filter" class="btn btn-primary" />
+            </div>
+        </form>
+
+        </div>
+        <div class="col">
+        <a class="btn btn-success" asp-action="Create">Insert New Movie Tickets</a>
+        </div>
+    </div>
+    
+       @for (int i = 0; i < Model.Count; i++)
+       {
+           var item = Model[i];
+
+           if(i % 3 == 0)
+           {
+               @:<div class="row">
+           }
+
+        <div class="col-md-3 m-4">
+            <div class="card" style="width: 18rem; height: 31rem;">
+                <img class="card-img-top" src="@item.MovieCover" style="height: 50%;" alt="Image for product!">
+
+                <div class="card-body">
+                    <h3 class="card-title">@item.MovieName</h3>
+                    <p class="card-text">@item.MovieDescription</p>
+                    
+                    
+                    <h6>Price: $@item.TicketPrice</h6>
+                    <h6>Date and Time: @item.ValidFor</h6>
+                </div>
+
+                <div class="card-footer">
+                    <a asp-controller="Ticket" asp-action="AddTicketToCart" asp-route-id="@item.Id" class="btn btn-info">Add to Cart</a>
+                    <a asp-controller="Ticket" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-secondary">Edit</a>
+                    <a asp-controller="Ticket" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
+                </div>
+            </div>
+        </div>
+
+
+           if(i % 3 == 2)
+           {
+               @:</div>
+           }
+       }
+</div>
